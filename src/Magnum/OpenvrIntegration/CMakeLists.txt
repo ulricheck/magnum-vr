@@ -35,17 +35,17 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/configure.h.cmake
         ${CMAKE_CURRENT_BINARY_DIR}/configure.h)
 
 set(MagnumOpenvrIntegration_SRCS
-        IVRSystem.cpp
+        VRSystem.cpp
 #        Context.cpp
 #        Enums.cpp
 #        Session.cpp
         )
 
 set(MagnumOpenvrIntegration_HEADERS
-        IVRSystem.h
+        VRSystem.h
 #        Context.h
 #        Enums.h
-#        OvrIntegration.h
+        OpenvrIntegration.h
         Integration.h
 #        Session.h
 
