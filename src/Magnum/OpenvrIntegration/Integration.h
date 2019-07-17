@@ -123,6 +123,24 @@ namespace Magnum { namespace Math { namespace Implementation {
                 }
             };
 
+            template<> struct RectangularMatrixConverter<4, 4, Float, vr::HmdMatrix34_t> {
+                static RectangularMatrix<4, 4, Float> from(const vr::HmdMatrix34_t& other) {
+                    RectangularMatrix<4, 4, Float> out{Magnum::Math::ZeroInit};
+                    for (std::size_t col = 0; col != 4; ++col)
+                        for (std::size_t row = 0; row != 3; ++row)
+                            out[col][row] = other.m[col][row];
+                    return out;
+                }
+
+                static vr::HmdMatrix34_t to(const RectangularMatrix<4, 4, Float>& other) {
+                    vr::HmdMatrix34_t out{};
+                    for (std::size_t col = 0; col != 4; ++col)
+                        for (std::size_t row = 0; row != 3; ++row)
+                            out.m[col][row] = other[col][row];
+                    return out;
+                }
+            };
+
             template<> struct RectangularMatrixConverter<4, 4, Float, vr::HmdMatrix44_t> {
                 static RectangularMatrix<4, 4, Float> from(const vr::HmdMatrix44_t& other) {
                     return RectangularMatrix<4, 4, Float>::from(reinterpret_cast<const Float*>(other.m));
