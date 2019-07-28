@@ -15,12 +15,18 @@
 #include <Corrade/Containers/EnumSet.h>
 
 #include "Magnum/OpenvrIntegration/OpenvrIntegration.h"
+#include "Magnum/OpenvrIntegration/HmdBase.h"
 #include "Magnum/OpenvrIntegration/visibility.h"
 
 #include <openvr.h>
+#include <Magnum/Math/Matrix4.h>
 
 
 namespace Magnum { namespace OpenvrIntegration {
+    using namespace Magnum::VR;
+
+        MAGNUM_OPENVRINTEGRATION_EXPORT void update_button_state(VRButtonState & state, const bool value);
+        MAGNUM_OPENVRINTEGRATION_EXPORT VRButton get_button_id_for_vendor(const uint32_t which_button, const VRInputVendor vendor);
 
         class MAGNUM_OPENVRINTEGRATION_EXPORT VRSystem {
 
@@ -41,7 +47,7 @@ namespace Magnum { namespace OpenvrIntegration {
             /** @brief Moving is not allowed */
             VRSystem(VRSystem&&) = delete;
 
-            ~Context();
+            ~VRSystem();
 
             /** @brief Copying is not allowed */
             VRSystem& operator=(const VRSystem&) = delete;
@@ -49,15 +55,56 @@ namespace Magnum { namespace OpenvrIntegration {
             /** @brief Moving is not allowed */
             VRSystem& operator=(VRSystem&&) = delete;
 
+
+
+            void set_world_pose(const Magnum::Matrix4 & p);
+            Magnum::Matrix4 get_world_pose();
+
+            Magnum::Matrix4 get_hmd_pose() const;
+            void set_hmd_pose(const Magnum::Matrix4 & p);
+
+            Magnum::Matrix4 get_eye_pose(VREye eye);
+
+            Magnum::Vector2i get_recommended_render_target_size();
+
+            Magnum::Matrix4 get_proj_matrix(VREye eye, float near_clip, float far_clip);
+
+            void get_optical_properties(VREye eye, float & aspectRatio, float & vfov);
+
+            /** get the stencil mask mesh for an eye **/
+            Magnum::GL::Mesh get_stencil_mask(VREye eye);
+
+            VRInputVendor get_input_vendor();
+
+
+            VRController get_controller(VRControllerRole controller);
+
+            void update();
+
+            void submit(const Magnum::GL::Texture2D& leftEeye, const Magnum::GL::Texture2D& rightEye);
+
+            void controller_render_data_callback(std::function<void(CachedControllerRenderData & data)> callback);
+
         private:
             static VRSystem* _instance;
             vr::IVRSystem *_pHMD;
             std::string _string_driver;
             std::string _string_display;
 
+            Magnum::Vector2i _renderTargetSize;
+            Magnum::Matrix4 _hmdPose, _worldPose{Magnum::Math::IdentityInit};
+
+            vr::IVRRenderModels * _renderModels;
 
 
-            std::string getTrackedDeviceString(vr::TrackedDeviceIndex_t unDevice, vr::TrackedDeviceProperty prop, vr::TrackedPropertyError *peError = NULL );
+            CachedControllerRenderData _controllerRenderData[2];
+            VRController _controllers[2];
+            std::function<void(CachedControllerRenderData & data)> _async_data_cb;
+            void load_render_data_impl(vr::VREvent_t event);
+
+
+            std::string get_tracked_device_string(vr::TrackedDeviceIndex_t unDevice, vr::TrackedDeviceProperty prop,
+                                                  vr::TrackedPropertyError *peError = NULL);
 
 
 

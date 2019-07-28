@@ -36,22 +36,15 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/configure.h.cmake
 
 set(MagnumOpenvrIntegration_SRCS
         VRSystem.cpp
-        OpenvrHMD.cpp
-#        Context.cpp
-#        Enums.cpp
-#        Session.cpp
+        VRCamera.cpp
         )
 
 set(MagnumOpenvrIntegration_HEADERS
         VRSystem.h
+        VRCamera.h
         HmdBase.h
-        OpenvrHMD.h
-#        Context.h
-#        Enums.h
         OpenvrIntegration.h
         Integration.h
-#        Session.h
-
         visibility.h
         )
 

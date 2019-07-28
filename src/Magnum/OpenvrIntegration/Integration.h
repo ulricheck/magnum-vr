@@ -129,6 +129,7 @@ namespace Magnum { namespace Math { namespace Implementation {
                     for (std::size_t col = 0; col != 4; ++col)
                         for (std::size_t row = 0; row != 3; ++row)
                             out[col][row] = other.m[col][row];
+                    out[3][3] = 1.f;
                     return out;
                 }
 
