@@ -194,8 +194,7 @@ namespace Magnum{ namespace OpenvrIntegration {
             float left = 0.0f, right = 0.0f, top = 0.0f, bottom = 0.0f;
             _pHMD->GetProjectionRaw(static_cast<vr::Hmd_Eye>(eye), &left, &right, &top, &bottom);
 
-            Magnum::Vector2 tanHalfFov = Magnum::Vector2(std::max(-left, right), st#        Session.h
-d::max(-top, bottom));
+            Magnum::Vector2 tanHalfFov = Magnum::Vector2(std::max(-left, right), std::max(-top, bottom));
             aspectRatio = tanHalfFov.x() / tanHalfFov.y();
             vfov = 2.0f * std::atan(tanHalfFov.y());
 
