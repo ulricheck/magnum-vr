@@ -56,7 +56,7 @@ namespace Magnum { namespace OpenvrIntegration {
             VRSystem& operator=(VRSystem&&) = delete;
 
 
-
+        public:
             void set_world_pose(const Magnum::Matrix4 & p);
             Magnum::Matrix4 get_world_pose();
 
