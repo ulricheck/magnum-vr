@@ -48,9 +48,6 @@ set(MagnumOpenvrIntegration_HEADERS
         visibility.h
         )
 
-if(MAGNUM_BUILD_DEPRECATED)
-    list(APPEND MagnumOpenvrIntegration_HEADERS Conversion.h)
-endif()
 
 # OvrIntegration library
 add_library(MagnumOpenvrIntegration ${SHARED_OR_STATIC}

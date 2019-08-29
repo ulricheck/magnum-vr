@@ -20,7 +20,7 @@ class MagnumVRConan(ConanFile):
     requires = (
         "magnum/2019.01@camposs/stable",
         "corrade/2019.01@camposs/stable",
-        "openvr/1.4.18@vendor/stable",
+        "openvr/1.6.10@vendor/stable",
     )
 
     options = {
@@ -29,7 +29,7 @@ class MagnumVRConan(ConanFile):
    }
     default_options = {
         "with_openvr": True,
-        "shared": False,
+        "shared": True,
     }
 
     # all sources are deployed with the package
@@ -39,6 +39,7 @@ class MagnumVRConan(ConanFile):
         if self.options.shared:
             self.options["magnum"].shared = True
             self.options["corrade"].shared = True
+            self.options["openvr"].shared = True
 
     def build(self):
         cmake = CMake(self)

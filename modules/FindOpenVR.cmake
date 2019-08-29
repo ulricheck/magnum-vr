@@ -34,7 +34,7 @@ find_path(OpenVR_INCLUDE_DIR
 mark_as_advanced(OpenVR_INCLUDE_DIR)
 
 find_library(OpenVR_LIBRARY
-        NAMES openvr_api
+        NAMES openvr_api openvr_api${_openvr_bitness}
         PATH_SUFFIXES
         "${OpenVR_PLATFORM}"
         "bin/${OpenVR_PLATFORM}"
