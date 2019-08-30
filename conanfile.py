@@ -44,6 +44,8 @@ class MagnumVRConan(ConanFile):
     def build(self):
         cmake = CMake(self)
         cmake.verbose = True
+        cmake.options["BUILD_STATIC"] = not self.options.shared
+        cmake.options["WITH_OPENVR"] = self.options.with_openvr
         cmake.configure()
         cmake.build()
         cmake.install()

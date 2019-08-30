@@ -24,7 +24,7 @@
 #   DEALINGS IN THE SOFTWARE.
 #
 
-find_package(Magnum REQUIRED GL)
+find_package(Magnum REQUIRED GL MeshTools Trade)
 find_package(OpenVR REQUIRED)
 
 if(BUILD_STATIC)
@@ -49,7 +49,7 @@ set(MagnumOpenvrIntegration_HEADERS
         )
 
 
-# OvrIntegration library
+# OpenvrIntegration library
 add_library(MagnumOpenvrIntegration ${SHARED_OR_STATIC}
         ${MagnumOpenvrIntegration_SRCS}
         ${MagnumOpenvrIntegration_HEADERS})
@@ -65,8 +65,10 @@ elseif(BUILD_STATIC_PIC)
     set_target_properties(MagnumOpenvrIntegration PROPERTIES POSITION_INDEPENDENT_CODE ON)
 endif()
 target_link_libraries(MagnumOpenvrIntegration
-        Magnum::GL
         Magnum::Magnum
+        Magnum::GL
+        Magnum::Trade
+        Magnum::MeshTools
         OpenVR::OpenVR)
 
 install(TARGETS MagnumOpenvrIntegration
